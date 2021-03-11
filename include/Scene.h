@@ -12,6 +12,7 @@ class Scene{
 public:
     Scene();
     ~Scene();
+    bool add_model(const char* model_path);
 private:
     unique_ptr<Scene_Impl> impl;
 };

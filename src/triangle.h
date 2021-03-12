@@ -7,6 +7,8 @@
 #include <array>
 #include<vector>
 #include<glm/glm.hpp>
+#include<memory>
+#include"material.h"
 using namespace glm;
 using namespace std;
 struct Vertex{
@@ -15,8 +17,12 @@ struct Vertex{
     vec3 tex_coord;
 };
 class Triangle{
+
+
 public:
     array<Vertex,3> vertices;
+
+    shared_ptr<Material> m;
 };
 
 class TriangleMesh{

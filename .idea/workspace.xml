@@ -40,14 +40,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b890ecc4-25ad-4251-a959-aeba41b77f7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/example/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/Scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/Scene.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/material.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/material.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/model.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/triangle.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/triangle.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/util.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +64,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="OCResolveContextSettings">
+    <option name="configuration" value="0-Debug-rt_core" />
+  </component>
   <component name="ProjectId" id="1pIJ7IxyhLU3yx9tocaf4HdIdA2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -78,8 +77,14 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wyz\projects\RayTracer\src" />
+    </key>
   </component>
   <component name="RunManager" selected="CMake Application.example">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
@@ -159,7 +164,7 @@
       <updated>1614864501584</updated>
       <workItem from="1614864502638" duration="1210000" />
       <workItem from="1614933778404" duration="1198000" />
-      <workItem from="1615349466039" duration="13473000" />
+      <workItem from="1615349466039" duration="24240000" />
     </task>
     <servers />
   </component>
@@ -186,41 +191,45 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="804" y="311" key="FileChooserDialogImpl/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615469008986" />
-    <state width="2005" height="325" key="GridCell.Tab.0.bottom" timestamp="1615471426360">
+    <state width="2005" height="300" key="GridCell.Tab.0.bottom" timestamp="1615537826513">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="325" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471426360" />
-    <state width="2005" height="325" key="GridCell.Tab.0.center" timestamp="1615471426360">
+    <state width="2005" height="300" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615537826513" />
+    <state width="2005" height="300" key="GridCell.Tab.0.center" timestamp="1615537826513">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="325" key="GridCell.Tab.0.center/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471426360" />
-    <state width="2005" height="325" key="GridCell.Tab.0.left" timestamp="1615471426360">
+    <state width="2005" height="300" key="GridCell.Tab.0.center/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615537826513" />
+    <state width="2005" height="300" key="GridCell.Tab.0.left" timestamp="1615537826513">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="325" key="GridCell.Tab.0.left/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471426360" />
-    <state width="2005" height="325" key="GridCell.Tab.0.right" timestamp="1615471426360">
+    <state width="2005" height="300" key="GridCell.Tab.0.left/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615537826513" />
+    <state width="2005" height="300" key="GridCell.Tab.0.right" timestamp="1615537826513">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="325" key="GridCell.Tab.0.right/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471426360" />
-    <state width="2005" height="376" key="GridCell.Tab.1.bottom" timestamp="1615471143689">
+    <state width="2005" height="300" key="GridCell.Tab.0.right/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615537826513" />
+    <state width="2005" height="284" key="GridCell.Tab.1.bottom" timestamp="1615533093527">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="376" key="GridCell.Tab.1.bottom/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471143689" />
-    <state width="2005" height="376" key="GridCell.Tab.1.center" timestamp="1615471143689">
+    <state width="2005" height="284" key="GridCell.Tab.1.bottom/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615533093527" />
+    <state width="2005" height="284" key="GridCell.Tab.1.center" timestamp="1615533093527">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="376" key="GridCell.Tab.1.center/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471143689" />
-    <state width="2005" height="376" key="GridCell.Tab.1.left" timestamp="1615471143689">
+    <state width="2005" height="284" key="GridCell.Tab.1.center/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615533093527" />
+    <state width="2005" height="284" key="GridCell.Tab.1.left" timestamp="1615533093526">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="376" key="GridCell.Tab.1.left/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471143689" />
-    <state width="2005" height="376" key="GridCell.Tab.1.right" timestamp="1615471143689">
+    <state width="2005" height="284" key="GridCell.Tab.1.left/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615533093526" />
+    <state width="2005" height="284" key="GridCell.Tab.1.right" timestamp="1615533093527">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2005" height="376" key="GridCell.Tab.1.right/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615471143689" />
+    <state width="2005" height="284" key="GridCell.Tab.1.right/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615533093527" />
     <state x="526" y="200" key="SettingsEditor" timestamp="1615382592243">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="526" y="200" key="SettingsEditor/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615382592243" />
+    <state x="681" y="259" key="run.anything.popup" timestamp="1615531001328">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="681" y="259" key="run.anything.popup/0.0.2048.1112/-1200.150.960.1496@0.0.2048.1112" timestamp="1615531001328" />
   </component>
 </project>

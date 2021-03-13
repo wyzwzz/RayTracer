@@ -27,7 +27,7 @@ public:
     string specular_texname;
     string specular_highlight_texname;
 
-    unique_ptr<Texture> texture;
+    unique_ptr<Texture> diffuse_texture;
 };
 
 

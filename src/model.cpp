@@ -19,6 +19,8 @@ std::string getModelName(const char* model_path)
             return name;
         }
     }
+    spdlog::critical("can't get model name for: {0}",model_path);
+    return "";
 }
 void Model::load(const char *model_path) {
     START_TIMER
@@ -60,8 +62,8 @@ void Model::load(const char *model_path) {
         m_->diffuse_texname=m.diffuse_texname;
         m_->specular_texname=m.specular_texname;
         m_->specular_highlight_texname=m.specular_highlight_texname;
-        m_->texture=make_unique<Texture>(m_->name);
-        m_->texture->load_texture(this->name+"/"+m_->diffuse_texname);
+        m_->diffuse_texture=make_unique<Texture>(m_->name);
+        m_->diffuse_texture->load_texture(this->name+"/"+m_->diffuse_texname);
         ms.push_back(move(m_));
     }
     for(auto i=0;i<materials.size();i++){
@@ -88,7 +90,8 @@ void Model::load(const char *model_path) {
                 spdlog::critical("only support triangle");
             }
             Triangle triangle;
-            for(size_t v=0;v<fv;v++){
+            for(size_t v=0;v<fv;v++)
+            {
                 tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
 
                 triangle.vertices[v].pos.x = attrib.vertices[3 * idx.vertex_index + 0];
@@ -99,8 +102,9 @@ void Model::load(const char *model_path) {
                 triangle.vertices[v].normal.z = attrib.normals[3 * idx.normal_index + 2];
                 triangle.vertices[v].tex_coord.x = attrib.texcoords[2 * idx.texcoord_index + 0];
                 triangle.vertices[v].tex_coord.y = attrib.texcoords[2 * idx.texcoord_index + 1];
-
             }
+            triangle.init();
+
             size_t m_id=shapes[s].mesh.material_ids[f];
 
 //            spdlog::debug("{0:d}",m_id);
@@ -112,6 +116,7 @@ void Model::load(const char *model_path) {
 
             index_offset += fv;
         }
+        mesh.build_bvh_tree();
         meshes.emplace_back(move(mesh));
     }
 

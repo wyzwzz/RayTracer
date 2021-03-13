@@ -11,7 +11,11 @@ class Model{
 public:
     explicit Model(const char* model_path);
     void load(const char* model_path);
+
+public:
+    string name;
 private:
     vector<TriangleMesh> meshes;
+
 };
 #endif //RAYTRACER_MODEL_H

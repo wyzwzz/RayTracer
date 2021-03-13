@@ -21,7 +21,11 @@ void Texture::load_texture(const string& tex_name)
 
     unsigned char *img = stbi_load(tex_name.c_str(), &width, &height, &nchannels, 0);
 
-    assert(width>0 && height>0 && nchannels>0 && nchannels<=4);
+    if(!(width>0 && height>0 && nchannels>0 && nchannels<=4)){
+        spdlog::error("texture load failed: {0}",tex_name);
+        stbi_image_free(img);
+        return ;
+    }
 
     data.resize(width*height*nchannels);
 
@@ -62,11 +66,19 @@ Color &&Texture::bilinear_sample(float u, float v) {
     int index_0,index_1,index_2,index_3;
     float x_pos=float(width)*u;
     float y_pos=(1.f-v)*float(height);
-    float w=width*u;
-    float h=(1.f-v)*height;
+    int w=width*u;
+    int h=(1.f-v)*height;
+    index_0=(w*width+h)*nchannels;
+    index_1=(w*width+h+1)*nchannels;
+    index_2=((w+1)*width+h)*nchannels;
+    index_3=((w+1)*width+h+1)*nchannels;
     float offset_x=x_pos-w;
     float offset_y=y_pos-h;
-
+    for(int i=0;i<nchannels;i++){
+        float tmp_x0=data[index_0+i]*(1.f-offset_x)+data[index_1+i]*offset_x;
+        float tmp_x1=data[index_2+i]*(1.f-offset_x)+data[index_3+i]*offset_x;
+        color[i]=tmp_x0*(1.f-offset_y)+tmp_x1*offset_y;
+    }
 
     return move(color);
 }

@@ -17,7 +17,8 @@ struct Vertex{
     vec3 tex_coord;
 };
 class Triangle{
-
+public:
+    Triangle()=default;
 
 public:
     array<Vertex,3> vertices;
@@ -27,8 +28,12 @@ public:
 
 class TriangleMesh{
 public:
-    void addTriangles();
-    void addTriangle();
+    void addTriangles(const vector<Triangle>& triangles){
+        this->triangles.insert(this->triangles.cend(),triangles.cbegin(),triangles.cend());
+    }
+    void addTriangle(Triangle&& triangle){
+        triangles.emplace_back(triangle);
+    }
 public:
 
     vector<Triangle> triangles;

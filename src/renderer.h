@@ -6,13 +6,21 @@
 #define RAYTRACER_RENDERER_IMPL_H
 #include<Renderer.h>
 #include<Scene.h>
+#include<Camera.h>
+#include<vector>
 class Renderer_Impl{
-    void render_frame(const Scene& scene);
+    int width,height;
+    vector<uint8_t> framebuffer;
+public:
+    Renderer_Impl():width(1200),height(900){}
+    void setup_window(int width,int height);
+    void render_frame(const Scene& scene,const Camera& camera,int spp);
+    auto get_frame()->Image&&;
 };
 
 
-Renderer::~Renderer() {
 
-}
+
+
 
 #endif //RAYTRACER_RENDERER_IMPL_H

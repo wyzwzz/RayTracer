@@ -6,6 +6,7 @@
 #define RAYTRACER_AABB_H
 #include<glm/glm.hpp>
 #include<limits>
+#include"ray.h"
 using namespace glm;
 using namespace std;
 class AABB{
@@ -70,6 +71,27 @@ public:
         return 0.5f*(min_p+max_p);
     }
 
+    bool intersect(const Ray& ray) const{
+        float t_min_x=(min_p.x-ray.origin.x)*ray.inv_direction.x;
+        float t_max_x=(max_p.x-ray.origin.x)*ray.inv_direction.x;
+        if(ray.direction.x<0){
+            swap(t_min_x,t_max_x);
+        }
+        float t_min_y=(min_p.y-ray.origin.y)*ray.inv_direction.y;
+        float t_max_y=(max_p.y-ray.origin.y)*ray.inv_direction.y;
+        if(ray.direction.y<0){
+            swap(t_min_y,t_max_y);
+        }
+        float t_min_z=(min_p.z-ray.origin.z)*ray.inv_direction.z;
+        float t_max_z=(max_p.z-ray.origin.z)*ray.inv_direction.z;
+        if(ray.direction.z<0){
+            swap(t_min_z,t_max_z);
+        }
+        float enter_t=std::max(t_min_x,std::max(t_min_y,t_min_z));
+        float exit_t=std::min(t_max_x,std::min(t_max_y,t_max_z));
+        if(exit_t > 0 && enter_t<=exit_t) return true;
+        else return false;
+    }
 
 public:
 

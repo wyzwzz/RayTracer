@@ -7,6 +7,8 @@
 #include <vector>
 #include"object.h"
 #include"aabb.h"
+#include"ray.h"
+#include"intersection.h"
 using namespace std;
 /**
  * one BVHNode only contain one object
@@ -32,6 +34,15 @@ public:
     BVHTree(vector<Object*>,SplitMethod split_method=SplitMethod::NAIVE);
     BVHNode* recursive_build(vector<Object*>&);
 
+    Intersection intersect(const Ray& ray) const;
+
+    Intersection intersect(const BVHNode* node,const Ray& ray) const;
+
+
+
+
+
+public:
 
     BVHNode* root;
     SplitMethod split_method;

@@ -5,10 +5,14 @@
 #ifndef RAYTRACER_OBJECT_H
 #define RAYTRACER_OBJECT_H
 #include"aabb.h"
-class Object{
+#include"intersection.h"
+class Color;
+class Object: public enable_shared_from_this<Object>{
 public:
     Object()=default;
     ~Object()=default;
     virtual const AABB& get_aabb() const=0;
+    virtual Intersection intersect(const Ray& ray)=0;
+    virtual Color getDiffuseColor(const vec3&)=0;
 };
 #endif //RAYTRACER_OBJECT_H

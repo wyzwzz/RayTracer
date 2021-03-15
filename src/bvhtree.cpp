@@ -69,3 +69,32 @@ BVHNode *BVHTree::recursive_build(vector<Object *>& objects) {
 
     return node;
 }
+
+Intersection BVHTree::intersect(const Ray &ray) const {
+    if(root){
+        return intersect(root,ray);
+    }
+    else{
+        return {};
+    }
+}
+
+Intersection BVHTree::intersect(const BVHNode *node, const Ray &ray) const {
+
+    if(!node){
+        return {};
+    }
+    else if(node->left || node->right){
+        Intersection intersection0=intersect(node->left,ray);
+        Intersection intersection1=intersect(node->right,ray);
+        return intersection0.distance<intersection1.distance?intersection0:intersection1;
+    }
+    else{
+        if(node->aabb.intersect(ray)){
+            return node->object->intersect(ray);
+        }
+        else{
+            return {};
+        }
+    }
+}

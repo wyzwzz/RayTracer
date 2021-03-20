@@ -7,12 +7,14 @@
 #include"aabb.h"
 #include"intersection.h"
 class Color;
-class Object: public enable_shared_from_this<Object>{
+class Object{
 public:
     Object()=default;
     ~Object()=default;
     virtual const AABB& get_aabb() const=0;
     virtual Intersection intersect(const Ray& ray)=0;
-    virtual Color getDiffuseColor(const vec3&)=0;
+    virtual Color get_diffuse_color(const vec3&)=0;
+    virtual void sample(Intersection&,float& pdf)=0;
+
 };
 #endif //RAYTRACER_OBJECT_H

@@ -91,6 +91,7 @@ Intersection BVHTree::intersect(const BVHNode *node, const Ray &ray) const {
     }
     else{
         if(node->aabb.intersect(ray)){
+//            std::cout<<"ray intersect with aabb"<<std::endl;
             return node->object->intersect(ray);
         }
         else{

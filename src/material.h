@@ -8,10 +8,20 @@
 #include<array>
 #include<memory>
 #include"texture.h"
+#include"config.h"
 using namespace std;
 class Material{
 public:
     Material()=default;
+    bool has_emission() const{
+        auto norm=emission[0]*emission[0]+emission[1]*emission[1]+emission[2]*emission[2];
+        if(norm>EPSILON){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 public:
     string name;
 

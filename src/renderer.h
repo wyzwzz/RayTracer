@@ -15,7 +15,7 @@ public:
     Renderer_Impl():width(1200),height(900){}
     void setup_window(int width,int height);
     void render_frame(const Scene& scene,const Camera& camera,int spp);
-    auto get_frame()->Image&&;
+    auto get_frame()->Image;
 };
 
 

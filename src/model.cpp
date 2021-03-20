@@ -54,10 +54,13 @@ void Model::load(const char *model_path) {
         m_->name=m.name;
         m_->ambient={m.ambient[0],m.ambient[1],m.ambient[2]};
         m_->diffuse={m.diffuse[0],m.diffuse[1],m.diffuse[2]};
+        spdlog::info("diffuse {0:f} {1:f} {2:f}",m_->diffuse[0],m_->diffuse[1],m_->diffuse[2]);
         m_->specular={m.specular[0],m.specular[1],m.specular[2]};
         m_->transmittance={m.transmittance[0],m.transmittance[1],m.transmittance[2]};
         m_->emission={m.emission[0],m.emission[1],m.emission[2]};
+        spdlog::info("emission {0:f} {1:f} {2:f}",m_->emission[0],m_->emission[1],m_->emission[2]);
         m_->shininess=m.shininess;
+        spdlog::info("shininess {0}",m_->shininess);
         m_->ambient_texname=m.ambient_texname;
         m_->diffuse_texname=m.diffuse_texname;
         m_->specular_texname=m.specular_texname;
@@ -122,4 +125,15 @@ void Model::load(const char *model_path) {
 
 
     END_TIMER("load model: "+string(model_path));
+}
+
+Intersection Model::get_intersection(const Ray &ray) {
+    for(auto& mesh:meshes){
+        auto intersect=mesh.get_intersection(ray);
+        if(intersect.happen){
+            return intersect;//assert one ray just intersect one mesh one triangle
+        }
+
+    }
+    return Intersection();
 }

@@ -6,6 +6,7 @@
 #define RAYTRACER_AABB_H
 #include<glm/glm.hpp>
 #include<limits>
+#include<iostream>
 #include"ray.h"
 using namespace glm;
 using namespace std;
@@ -72,6 +73,7 @@ public:
     }
 
     bool intersect(const Ray& ray) const{
+//        std::cout<<"test intersection between aabb and ray"<<std::endl;
         float t_min_x=(min_p.x-ray.origin.x)*ray.inv_direction.x;
         float t_max_x=(max_p.x-ray.origin.x)*ray.inv_direction.x;
         if(ray.direction.x<0){
@@ -89,7 +91,14 @@ public:
         }
         float enter_t=std::max(t_min_x,std::max(t_min_y,t_min_z));
         float exit_t=std::min(t_max_x,std::min(t_max_y,t_max_z));
-        if(exit_t > 0 && enter_t<=exit_t) return true;
+//        std::cout<<max_p.x<<" "<<max_p.y<<" "<<max_p.z<<std::endl;
+//        std::cout<<"enter "<<enter_t<<" exit "<<exit_t<<std::endl;
+        if(exit_t > 0 && enter_t<=exit_t) {
+//            std::cout<<"enter "<<enter_t<<" exit "<<exit_t<<std::endl;
+//            std::cout<<min_p.x<<" "<<min_p.y<<" "<<min_p.z<<std::endl;
+//            std::cout<<max_p.x<<" "<<max_p.y<<" "<<max_p.z<<std::endl;
+            return true;
+        }
         else return false;
     }
 

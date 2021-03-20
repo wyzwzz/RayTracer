@@ -16,7 +16,7 @@ public:
     Renderer();
     void setup_window(int width,int height);
     void render_frame(const Scene& scene,const Camera& camera,int spp=16);
-    auto get_frame()-> Image&&;
+    auto get_frame()-> Image;
     ~Renderer();
 private:
     unique_ptr<Renderer_Impl> impl;

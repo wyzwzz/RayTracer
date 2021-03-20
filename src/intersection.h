@@ -9,14 +9,17 @@
 class Object;
 class Intersection{
 public:
-    Intersection(){
+    Intersection()
+    :happen(false),distance(std::numeric_limits<double>::max()),obj(nullptr),m(nullptr),normal({}),tex_coord({}),pos({})
+    {
 
     }
     bool happen;
     vec3 normal;//normal for triangle surface, can improve by calculate with three vertices' normal
-    vec3 barycentric;
+    vec2 tex_coord;
+    vec3 pos;
     double distance;
-    shared_ptr<Object> obj;
+    Object* obj;
     shared_ptr<Material> m;
 };
 

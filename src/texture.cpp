@@ -38,9 +38,9 @@ void Texture::load_texture(const string& tex_name)
 
 Color Texture::sample(float u, float v) {
     switch (this->method) {
-        case NearestNeighbor:return nn_sample(u,v);break;
-        case Bilinear:return bilinear_sample(u,v);break;
-        case Cubic:return cubic_sample(u,v);break;
+        case NearestNeighbor:return nn_sample(u,v);
+        case Bilinear:return bilinear_sample(u,v);
+        case Cubic:return cubic_sample(u,v);
     }
 }
 
@@ -48,7 +48,7 @@ void Texture::set_sample_method(SampleMethod method) {
     this->method=method;
 }
 
-Color &&Texture::nn_sample(float u, float v) {
+Color Texture::nn_sample(float u, float v) {
     Color color;
     int w=u*width;
     int h=(1.f-v)*height;
@@ -58,10 +58,10 @@ Color &&Texture::nn_sample(float u, float v) {
         color[i]=data[offset+i];
     }
 
-    return move(color);
+    return color;
 }
 
-Color &&Texture::bilinear_sample(float u, float v) {
+Color Texture::bilinear_sample(float u, float v) {
     Color color;
     int index_0,index_1,index_2,index_3;
     float x_pos=float(width)*u;
@@ -69,9 +69,20 @@ Color &&Texture::bilinear_sample(float u, float v) {
     int w=width*u;
     int h=(1.f-v)*height;
     index_0=(w*width+h)*nchannels;
-    index_1=(w*width+h+1)*nchannels;
-    index_2=((w+1)*width+h)*nchannels;
-    index_3=((w+1)*width+h+1)*nchannels;
+    if(h>=height || w>=width) {
+        if (h < height)
+            index_1 = (w * width + h + 1) * nchannels;
+        else
+            index_1 = index_0;
+        if (w < width)
+            index_2 = ((w + 1) * width + h) * nchannels;
+        else
+            index_2 = index_0;
+        index_3=index_0;
+    }
+    else
+        index_3=((w+1)*width+h+1)*nchannels;
+
     float offset_x=x_pos-w;
     float offset_y=y_pos-h;
     for(int i=0;i<nchannels;i++){
@@ -80,13 +91,13 @@ Color &&Texture::bilinear_sample(float u, float v) {
         color[i]=tmp_x0*(1.f-offset_y)+tmp_x1*offset_y;
     }
 
-    return move(color);
+    return color;
 }
 
-Color &&Texture::cubic_sample(float u, float v) {
+Color Texture::cubic_sample(float u, float v) {
     Color color;
     int w=u*width;
     int h=(1.f-v)*height;
 
-    return move(color);
+    return color;
 }

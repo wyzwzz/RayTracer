@@ -6,6 +6,7 @@
 #define RAYTRACER_TEXTURE_H
 #include<string>
 #include<vector>
+#include<iostream>
 struct Color{
     Color():r(0),g(0),b(0),a(0){}
     uint8_t r,g,b,a;
@@ -30,11 +31,13 @@ public:
     void load_texture(const string& tex_name);
     Color sample(float u,float v);
     void set_sample_method(SampleMethod method);
-
+    bool is_empty() const{
+        return data.empty();
+    }
 private:
-    Color&& nn_sample(float u,float v);
-    Color&& bilinear_sample(float u,float v);
-    Color&& cubic_sample(float u,float v);
+    Color nn_sample(float u,float v);
+    Color bilinear_sample(float u,float v);
+    Color cubic_sample(float u,float v);
 public:
     string name;
 

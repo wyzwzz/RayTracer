@@ -8,12 +8,15 @@
 #include"model.h"
 class Scene_Impl{
 public:
-    Scene_Impl()=default;
+    Scene_Impl()
+    :russian_roulette(0.9f)
+    {};
     bool add_model(const char* model_path);
     void add_model(Model&&);
-
+    vec4 cast_ray(const Ray& ray,int depth);
 private:
     vector<Model> models;
+    float russian_roulette;
 };
 
 Scene::~Scene() {
@@ -26,6 +29,10 @@ bool Scene::add_model(const char *model_path) {
 
 Scene::Scene() {
     impl=make_unique<Scene_Impl>();
+}
+
+vec4 Scene::cast_ray(const Ray ray, int depth) const{
+    return impl->cast_ray(ray,depth);
 }
 
 

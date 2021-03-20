@@ -11,7 +11,7 @@ class Model{
 public:
     explicit Model(const char* model_path);
     void load(const char* model_path);
-
+    Intersection get_intersection(const Ray& ray);
 public:
     string name;
 private:

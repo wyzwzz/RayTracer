@@ -8,6 +8,7 @@
 using namespace std;
 class Camera{
 public:
+    Camera()=default;
     array<float,3> position;
     array<float,3> look_at;
     array<float,3> up;

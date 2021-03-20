@@ -127,6 +127,9 @@ public:
     Intersection get_intersection(const Ray& ray){
         return bvh_tree->intersect(ray);
     }
+    AABB get_bound() const{
+        return aabb;
+    }
 public:
     AABB aabb;
     vector<Triangle> triangles;

@@ -137,3 +137,11 @@ Intersection Model::get_intersection(const Ray &ray) {
     }
     return Intersection();
 }
+
+AABB Model::get_bound() const {
+    AABB aabb;
+    for(auto& mesh:meshes){
+        aabb.union_(mesh.get_bound());
+    }
+    return aabb;
+}

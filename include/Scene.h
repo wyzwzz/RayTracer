@@ -15,6 +15,7 @@ public:
     Scene();
     ~Scene();
     bool add_model(const char* model_path);
+    void load_environment_map(const char* path);
     vec4 cast_ray(const Ray ray,int depth) const;
 private:
     unique_ptr<Scene_Impl> impl;

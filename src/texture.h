@@ -7,6 +7,8 @@
 #include<string>
 #include<vector>
 #include<iostream>
+
+using namespace std;
 struct Color{
     Color():r(0),g(0),b(0),a(0){}
     uint8_t r,g,b,a;
@@ -16,6 +18,7 @@ struct Color{
             case 1:return g;
             case 2:return b;
             case 3:return a;
+            default:throw runtime_error("Color: index out of range");
         }
     }
 };
@@ -24,20 +27,27 @@ enum SampleMethod{
     Bilinear,
     Cubic
 };
+
 using namespace std;
-class Texture{
+class ITexture{
+public:
+    ITexture()=default;
+    virtual void load_texture(const string& tex_name)=0;
+    virtual Color sample(float u,float v)=0;
+    virtual void set_sample_method(SampleMethod method)=0;
+    virtual bool is_empty() const=0;
+};
+class Texture: public ITexture{
 public:
     Texture(const string& name);
-    void load_texture(const string& tex_name);
-    Color sample(float u,float v);
-    void set_sample_method(SampleMethod method);
-    bool is_empty() const{
+    void load_texture(const string& tex_name) override;
+    Color sample(float u,float v) override;
+    void set_sample_method(SampleMethod method) override;
+    bool is_empty() const override{
         return data.empty();
     }
 private:
-    Color nn_sample(float u,float v);
-    Color bilinear_sample(float u,float v);
-    Color cubic_sample(float u,float v);
+
 public:
     string name;
 
@@ -47,6 +57,27 @@ public:
 
     SampleMethod method;
 };
+class EnvironmentMap: public ITexture{
+public:
+    EnvironmentMap(const string& name);
+    void load_texture(const string& tex_name) override;
+    Color sample(float u,float v) override;
+    void set_sample_method(SampleMethod method) override;
+    bool is_empty() const override;
 
+    /**
+     * @brief x,y,z must be normalized vector
+     */
+    Color sample(float x,float y,float z);
+
+
+private:
+
+private:
+    SampleMethod method;
+    int width,height,nchannels;
+    string name;
+    vector<float> data;
+};
 
 #endif //RAYTRACER_TEXTURE_H

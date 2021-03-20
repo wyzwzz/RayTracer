@@ -101,7 +101,11 @@ public:
         }
         else return false;
     }
-
+    friend ostream& operator<<(ostream& os,const AABB& aabb){
+        os<<"minP:( "<<aabb.min_p.x<<" "<<aabb.min_p.y<<" "<<aabb.min_p.z<<" )\t"
+          <<"maxP:( "<<aabb.max_p.x<<" "<<aabb.max_p.y<<" "<<aabb.max_p.z<<" )";
+        return os;
+    }
 public:
 
     vec3 min_p,max_p;

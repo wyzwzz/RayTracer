@@ -38,7 +38,9 @@ public:
 
     Intersection intersect(const BVHNode* node,const Ray& ray) const;
 
-
+    AABB get_bound() const{
+        return root->aabb;
+    }
 
 
 

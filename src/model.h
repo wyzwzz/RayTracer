@@ -12,6 +12,7 @@ public:
     explicit Model(const char* model_path);
     void load(const char* model_path);
     Intersection get_intersection(const Ray& ray);
+    AABB get_bound() const;
 public:
     string name;
 private:

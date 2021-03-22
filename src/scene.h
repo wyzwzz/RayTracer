@@ -21,7 +21,7 @@ public:
 private:
     bool has_env_map() const;
 private:
-    unique_ptr<EnvironmentMap> env_map;
+    unique_ptr<Texture<float>> env_map;
     vector<Model> models;
     float russian_roulette;
     AABB aabb;

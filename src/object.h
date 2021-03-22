@@ -6,6 +6,8 @@
 #define RAYTRACER_OBJECT_H
 #include"aabb.h"
 #include"intersection.h"
+
+template<class T>
 class Color;
 class Object{
 public:
@@ -13,7 +15,7 @@ public:
     ~Object()=default;
     virtual const AABB& get_aabb() const=0;
     virtual Intersection intersect(const Ray& ray)=0;
-    virtual Color get_diffuse_color(const vec3&)=0;
+    virtual Color<uint8_t> get_diffuse_color(const vec3&)=0;
     virtual void sample(Intersection&,float& pdf)=0;
 
 };

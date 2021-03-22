@@ -85,7 +85,7 @@ public:
 
         return intersection;
     }
-    Color get_diffuse_color(const vec3& b) override{
+    Color<uint8_t> get_diffuse_color(const vec3& b) override{
         vec2 tex_sample_coord=vertices[0].tex_coord*b.x+vertices[1].tex_coord*b.y+vertices[2].tex_coord*b.z;
         return m->diffuse_texture->sample(tex_sample_coord.x,tex_sample_coord.y);
     }

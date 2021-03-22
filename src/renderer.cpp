@@ -54,7 +54,9 @@ void Renderer_Impl::render_frame(const Scene &scene, const Camera &camera,int sp
             framebuffer[idx+1]=(glm::uint8_t)255*glm::clamp(color.g,0.f,1.f);
             framebuffer[idx+2]=(glm::uint8_t)255*glm::clamp(color.b,0.f,1.f);
         }
-//        std::cout<<"height: "<<j<<std::endl;
+
+        std::cout<<"height: "<<j<<std::endl;
+//        std::cout.flush();
     }
 
 

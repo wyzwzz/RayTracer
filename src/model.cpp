@@ -2,7 +2,7 @@
 // Created by wyz on 2021/3/11.
 //
 #define TINYOBJLOADER_IMPLEMENTATION
-
+#define STB_IMAGE_IMPLEMENTATION
 #include<tiny_obj_loader.h>
 #include"model.h"
 #include"util.h"
@@ -65,7 +65,7 @@ void Model::load(const char *model_path) {
         m_->diffuse_texname=m.diffuse_texname;
         m_->specular_texname=m.specular_texname;
         m_->specular_highlight_texname=m.specular_highlight_texname;
-        m_->diffuse_texture=make_unique<Texture>(m_->name);
+        m_->diffuse_texture=make_unique<Texture<uint8_t>>(m_->name);
         m_->diffuse_texture->load_texture(this->name+"/"+m_->diffuse_texname);
         ms.push_back(move(m_));
     }
@@ -103,8 +103,27 @@ void Model::load(const char *model_path) {
                 triangle.vertices[v].normal.x = attrib.normals[3 * idx.normal_index + 0];
                 triangle.vertices[v].normal.y = attrib.normals[3 * idx.normal_index + 1];
                 triangle.vertices[v].normal.z = attrib.normals[3 * idx.normal_index + 2];
-                triangle.vertices[v].tex_coord.x = attrib.texcoords[2 * idx.texcoord_index + 0];
-                triangle.vertices[v].tex_coord.y = attrib.texcoords[2 * idx.texcoord_index + 1];
+//                if(triangle.vertices[v].tex_coord.x>1.f || triangle.vertices[v].tex_coord.y>1.f){
+//                    spdlog::error("tex coord {2} > 1.f {0} {1}",triangle.vertices[v].tex_coord.x,triangle.vertices[v].tex_coord.y,
+//                                  ms[shapes[s].mesh.material_ids[f]]->name);
+//                }
+                float _ux=attrib.texcoords[2 * idx.texcoord_index + 0];
+                int _u=_ux;
+                if(_u>0)
+                    triangle.vertices[v].tex_coord.x = _ux-_u;
+                else if(_ux<0.f)
+                    triangle.vertices[v].tex_coord.x = _ux-_u+1;
+                float _vy=attrib.texcoords[2 * idx.texcoord_index + 1];
+                int _v=_vy;
+                if(_v>0)
+                    triangle.vertices[v].tex_coord.y = _vy-_v;
+                else if(_vy<0.f)
+                    triangle.vertices[v].tex_coord.y = _vy-_v+1;
+
+                if(triangle.vertices[v].tex_coord.x>1.f || triangle.vertices[v].tex_coord.y>1.f){
+                    spdlog::critical("tex coord {2} > 1.f {0} {1}",triangle.vertices[v].tex_coord.x,triangle.vertices[v].tex_coord.y,
+                                  ms[shapes[s].mesh.material_ids[f]]->name);
+                }
             }
             triangle.init();
 

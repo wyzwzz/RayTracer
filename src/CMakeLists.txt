@@ -7,7 +7,7 @@ list(
         scene.cpp
         model.cpp
         material.cpp
-        texture.cpp
+#        texture.cpp
         renderer.cpp
         image.cpp
 )

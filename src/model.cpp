@@ -56,6 +56,7 @@ void Model::load(const char *model_path) {
         m_->diffuse={m.diffuse[0],m.diffuse[1],m.diffuse[2]};
         spdlog::info("diffuse {0:f} {1:f} {2:f}",m_->diffuse[0],m_->diffuse[1],m_->diffuse[2]);
         m_->specular={m.specular[0],m.specular[1],m.specular[2]};
+        spdlog::info("specular {0:f} {1:f} {2:f}",m_->specular[0],m_->specular[1],m_->specular[2]);
         m_->transmittance={m.transmittance[0],m.transmittance[1],m.transmittance[2]};
         m_->emission={m.emission[0],m.emission[1],m.emission[2]};
         spdlog::info("emission {0:f} {1:f} {2:f}",m_->emission[0],m_->emission[1],m_->emission[2]);
@@ -163,4 +164,21 @@ AABB Model::get_bound() const {
         aabb.union_(mesh.get_bound());
     }
     return aabb;
+}
+
+float Model::get_emit_area() const {
+    float area=0.f;
+    for(auto& mesh:meshes){
+        area+=mesh.get_emit_area();
+    }
+    return area;
+}
+
+vector<Object *> Model::get_emit_object() {
+    vector<Object*> emit_object;
+    for(auto& mesh:meshes){
+        auto obj=mesh.get_emit_object();
+        emit_object.insert(emit_object.cend(),obj.cbegin(),obj.cend());
+    }
+    return emit_object;
 }

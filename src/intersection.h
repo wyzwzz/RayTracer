@@ -15,7 +15,7 @@ public:
 
     }
     bool happen;
-    vec3 normal;//normal for triangle surface, can improve by calculate with three vertices' normal
+    vec3 normal;
     vec2 tex_coord;
     vec3 pos;
     double distance;

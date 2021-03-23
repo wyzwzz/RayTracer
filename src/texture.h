@@ -26,6 +26,7 @@ public:
             default:throw runtime_error("Color: index out of range");
         }
     }
+
 };
 enum SampleMethod{
     NearestNeighbor,

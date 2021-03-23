@@ -10,21 +10,28 @@
 class Scene_Impl{
 public:
     Scene_Impl()
-    :russian_roulette(0.9f)
+    :russian_roulette(0.9f),total_emit_object_area(0.f)
     {};
     bool add_model(const char* model_path);
     void add_model(Model&&);
     void load_environment_map(const char* path);
     vec4 cast_ray(const Ray& ray,int depth);
     void update_bound();
+    void sample_light(Intersection& intersection,float& pdf);
 
 private:
+    Intersection get_intersection(const Ray& ray);
+    bool has_emit_object() const;
     bool has_env_map() const;
+    void update_emit_area();
+    void update_emit_object();
 private:
+    vector<Object*> emit_objects;
     unique_ptr<Texture<float>> env_map;
     vector<Model> models;
     float russian_roulette;
     AABB aabb;
+    float total_emit_object_area;
 };
 
 Scene::~Scene() {

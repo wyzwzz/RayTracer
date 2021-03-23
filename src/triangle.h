@@ -13,6 +13,7 @@
 #include "bvhtree.h"
 #include "config.h"
 #include "texture.h"
+#include "util.h"
 using namespace glm;
 using namespace std;
 struct Vertex{
@@ -90,7 +91,20 @@ public:
         return m->diffuse_texture->sample(tex_sample_coord.x,tex_sample_coord.y);
     }
     void sample(Intersection& intersection,float& pdf) override{
-
+        if(!m->has_emission()){
+            spdlog::critical("sample at no emission triangle");
+        }
+        float x = std::sqrt(get_random_float()), y = get_random_float();
+        float b0=1.f-x,b1=x*(1.f-y),b2=x*y;
+        intersection.happen=true;
+        intersection.pos=vertices[0].pos*b0+vertices[1].pos*b1+vertices[2].pos*b2;
+        intersection.normal=vertices[0].normal*b0+vertices[1].normal*b1+vertices[2].normal*b2;
+        intersection.m=m;
+        intersection.obj=this;
+        pdf=1.f/area;
+    }
+    float get_area() const override{
+        return area;
     }
 public:
     vec3 normal;
@@ -129,6 +143,24 @@ public:
     }
     AABB get_bound() const{
         return aabb;
+    }
+    float get_emit_area() const{
+        float area=0.f;
+        for(auto& it:triangles){
+            if(it.m->has_emission()){
+                area+=it.area;
+            }
+        }
+        return area;
+    }
+    vector<Object*> get_emit_object(){
+        vector<Object*> emit_objects;
+        for(auto&it:triangles){
+            if(it.m->has_emission()){
+                emit_objects.emplace_back(&it);
+            }
+        }
+        return emit_objects;
     }
 public:
     AABB aabb;

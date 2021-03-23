@@ -17,6 +17,6 @@ public:
     virtual Intersection intersect(const Ray& ray)=0;
     virtual Color<uint8_t> get_diffuse_color(const vec3&)=0;
     virtual void sample(Intersection&,float& pdf)=0;
-
+    virtual float get_area() const=0;
 };
 #endif //RAYTRACER_OBJECT_H

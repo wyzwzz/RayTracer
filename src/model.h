@@ -13,6 +13,8 @@ public:
     void load(const char* model_path);
     Intersection get_intersection(const Ray& ray);
     AABB get_bound() const;
+    float get_emit_area() const;
+    vector<Object*> get_emit_object() ;
 public:
     string name;
 private:

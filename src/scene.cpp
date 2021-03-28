@@ -24,7 +24,7 @@ Intersection Scene_Impl::get_intersection(const Ray& ray) {
 }
 
 vec4 Scene_Impl::cast_ray(const Ray &ray, int depth) {
-    if(depth>2){
+    if(depth>5){
 //        spdlog::critical("depth>10 {0}",depth);
         return vec4{0.f};
     }
@@ -48,9 +48,9 @@ vec4 Scene_Impl::cast_ray(const Ray &ray, int depth) {
             return vec4{m->emission[0]>1.f?1.f:m->emission[0],m->emission[1]>1.f?1.f:m->emission[1],m->emission[2]>1.f?1.f:m->emission[2],0.f};
         }
 
-//        if(get_random_float()>russian_roulette){
-//            return vec4{0.f};
-//        }
+        if(get_random_float()>russian_roulette){
+            return vec4{0.f};
+        }
 
         if(m->has_diffuse()){
             /**
@@ -97,18 +97,21 @@ vec4 Scene_Impl::cast_ray(const Ray &ray, int depth) {
              */
             vec3 diff_reflect_dir=normalize(m->sample(-ray.direction,hit_normal));
             if(!m->diffuse_texture->is_empty()){
+                if(tex_coord.x<0.f || tex_coord.y<0.f){
+                    spdlog::critical("texcoord < 0.f {0} {1}",tex_coord.x,tex_coord.y);
+                }
                 auto color=m->diffuse_texture->sample(tex_coord.x,tex_coord.y);
 //                if(depth==0)
 //                    spdlog::info("name {2} sample uv: {0} {1}",tex_coord.x,tex_coord.y,m->diffuse_texname);
 //            spdlog::info("color: {0} {1} {2}",color.r,color.g,color.b);
                 vec3 diff_base_color={color.r/255.f,color.g/255.f,color.b/255.f};
-//                spdlog::info("diff_base_color {0} {1} {2}",diff_base_color.x,diff_base_color.y,diff_base_color.z);
-
+////                spdlog::info("diff_base_color {0} {1} {2}",diff_base_color.x,diff_base_color.y,diff_base_color.z);
+//
                 indirect_light=vec4{vec3(cast_ray({hit_pos+0.01f*diff_reflect_dir,diff_reflect_dir},depth+1))*m->get_reflect_coefficient(diff_base_color,-ray.direction,diff_reflect_dir,hit_normal)
                                     *dot(diff_reflect_dir,hit_normal)/m->pdf(-ray.direction,diff_reflect_dir,hit_normal)/russian_roulette,0.f};
-//                if(indirect_light.x>=1.f){
-//                    spdlog::critical("indirect light red > 1.f : {0}",tmp.x);
-//                }
+////                if(indirect_light.x>=1.f){
+////                    spdlog::critical("indirect light red > 1.f : {0}",tmp.x);
+////                }
 
             }
             else{
@@ -143,9 +146,9 @@ vec4 Scene_Impl::cast_ray(const Ray &ray, int depth) {
 //                spdlog::critical("specular light red > 1.f: {0}",specular_light.x);
 //            }
 //            std::cout<<"specular light: "<<specular_light.x<<" "<<specular_light.y<<" "<<specular_light.z<<std::endl;
-             specular_light.x=pow(specular_light.x>1.f?1.f:specular_light.x,m->shininess)*m->specular[0];
-             specular_light.y=pow(specular_light.y>1.f?1.f:specular_light.y,m->shininess)*m->specular[1];
-             specular_light.z=pow(specular_light.z>1.f?1.f:specular_light.z,m->shininess)*m->specular[2];
+             specular_light.x=pow(specular_light.x>1.f?1.f:specular_light.x,2)*m->specular[0];
+             specular_light.y=pow(specular_light.y>1.f?1.f:specular_light.y,2)*m->specular[1];
+             specular_light.z=pow(specular_light.z>1.f?1.f:specular_light.z,2)*m->specular[2];
 //            std::cout<<"specular light: "<<specular_light.x<<" "<<specular_light.y<<" "<<specular_light.z<<std::endl;
         }
         /**

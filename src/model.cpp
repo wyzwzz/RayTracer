@@ -110,19 +110,20 @@ void Model::load(const char *model_path) {
 //                }
                 float _ux=attrib.texcoords[2 * idx.texcoord_index + 0];
                 int _u=_ux;
-                if(_u>0)
+                if(_u>=0 && _ux>=0.f)
                     triangle.vertices[v].tex_coord.x = _ux-_u;
                 else if(_ux<0.f)
                     triangle.vertices[v].tex_coord.x = _ux-_u+1;
                 float _vy=attrib.texcoords[2 * idx.texcoord_index + 1];
                 int _v=_vy;
-                if(_v>0)
+                if(_v>=0 && _vy>=0.f)
                     triangle.vertices[v].tex_coord.y = _vy-_v;
                 else if(_vy<0.f)
                     triangle.vertices[v].tex_coord.y = _vy-_v+1;
 
-                if(triangle.vertices[v].tex_coord.x>1.f || triangle.vertices[v].tex_coord.y>1.f){
-                    spdlog::critical("tex coord {2} > 1.f {0} {1}",triangle.vertices[v].tex_coord.x,triangle.vertices[v].tex_coord.y,
+                if(triangle.vertices[v].tex_coord.x>1.f || triangle.vertices[v].tex_coord.y>1.f ||
+                        triangle.vertices[v].tex_coord.x<0.f || triangle.vertices[v].tex_coord.y<0.f){
+                    spdlog::critical("tex coord {2} > 1.f or < 0.f {0} {1}",triangle.vertices[v].tex_coord.x,triangle.vertices[v].tex_coord.y,
                                   ms[shapes[s].mesh.material_ids[f]]->name);
                 }
             }

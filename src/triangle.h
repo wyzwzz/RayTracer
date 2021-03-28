@@ -81,6 +81,7 @@ public:
         intersection.normal=vertices[0].normal*float(1.0-b1-b2)+vertices[1].normal*(float)b1+vertices[2].normal*(float)b2;
         intersection.pos=vertices[0].pos*(float)(1.0-b1-b2)+vertices[1].pos*(float)b1+vertices[2].pos*(float)b2;
         intersection.tex_coord=vertices[0].tex_coord*(float)(1.0-b1-b2)+vertices[1].tex_coord*(float)b1+vertices[2].tex_coord*(float)b2;
+
         intersection.m=m;
         intersection.obj=this;
         intersection.distance=t;

@@ -10,7 +10,7 @@
 class Scene_Impl{
 public:
     Scene_Impl()
-    :russian_roulette(0.9f),total_emit_object_area(0.f)
+    :russian_roulette(1.f),total_emit_object_area(0.f)
     {};
     bool add_model(const char* model_path);
     void add_model(Model&&);

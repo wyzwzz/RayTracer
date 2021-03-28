@@ -43,6 +43,15 @@ public:
             return false;
         }
     }
+    vec3 get_reflect_coefficient(const vec3& diff, const vec3& in_dir,const vec3& out_dir,const vec3& normal) const{
+        float cosalpha=dot(normal,out_dir);
+        if(cosalpha>0.f){
+            return diff/M_PI;
+        }
+        else{
+            return vec3{0.f};
+        }
+    }
     vec3 get_reflect_coefficient(const vec3& in_dir,const vec3& out_dir,const vec3& normal) const{
         float cosalpha=dot(normal,out_dir);
         if(cosalpha>0.f){
@@ -53,8 +62,13 @@ public:
         }
     }
     float pdf(const vec3& in_dir,const vec3& out_dir,const vec3& normal){
-
-        return 0.f;
+        if(dot(out_dir,normal)>0.f){
+            return 0.5f/M_PI;
+        }
+        else{
+            spdlog::critical("pdf is zero");
+            return 0.f;
+        }
     }
     vec3 sample(const vec3& in_dir,const vec3& normal){
         float x1 = get_random_float(), x2 = get_random_float();

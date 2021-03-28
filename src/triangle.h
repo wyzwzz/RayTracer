@@ -75,6 +75,7 @@ public:
             return intersection;
         }
         double t=dot(s2,e2)*s1e1_inv;
+        if(t<=0.f) return intersection;
 //        {1.0-b1-b2,b1,b2};
         intersection.happen=true;
         intersection.normal=vertices[0].normal*float(1.0-b1-b2)+vertices[1].normal*(float)b1+vertices[2].normal*(float)b2;
@@ -101,7 +102,8 @@ public:
         intersection.normal=vertices[0].normal*b0+vertices[1].normal*b1+vertices[2].normal*b2;
         intersection.m=m;
         intersection.obj=this;
-        pdf=1.f/area;
+
+        pdf=area;
     }
     float get_area() const override{
         return area;

@@ -86,9 +86,14 @@ inline void Texture<uint8_t>::load_texture(const string &tex_name) {
 
     spdlog::info("texture file: {0}, width {1:d} height {2:d} nrComponents {3:d}",tex_name,width,height,nchannels);
 
-    float min_x=100.f;
-
-    spdlog::info("min value : {0}",min_x);
+//    if(tex_name=="car/textures/street_albedo.jpg"){
+//        for(size_t i=0;i<height;i++){
+//            for(size_t j=0;j<width;j++){
+//                std::cout<<" ("<<(int)img[(i*width+j)*nchannels]<<" "<<(int)img[(i*width+j)*nchannels+1]<<" "<<(int)img[(i*width+j)*nchannels+2]<<") ";
+//            }
+//            std::cout<<std::endl;
+//        }
+//    }
 
     stbi_image_free(img);
 }
